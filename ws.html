@@ -1,0 +1,58 @@
+<html>
+<head>
+
+  <title>uFR Online WebSocket example - Real time event preview</title>
+
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+</style>
+
+<script>
+    var ws = new WebSocket('ws://localhost:8181');
+
+    ws.onopen = function () {
+        console.log('websocket is connected ...')
+		
+    }
+
+    ws.onmessage = function (ev) {
+        addRow(ev.data.split(" ")[0], ev.data.split(" ")[1])
+    }
+	
+function addRow(uid, ip) {
+	let tableRef = document.getElementById("preview")
+ 
+	let newRow = tableRef.insertRow(-1)
+	let uidCell = newRow.insertCell(0)
+	let ipCell = newRow.insertCell(1)
+
+	let uidData = document.createTextNode(uid)
+	let ipData = document.createTextNode(ip)
+
+	uidCell.appendChild(uidData)
+	ipCell.appendChild(ipData)
+}
+</script>
+
+</head>
+
+
+<h1>
+    WebSocket example - Real time event preview (uFR Online is working in client mode)
+</h1>
+
+<table style="width:50%" id="preview">
+  <tr>
+    <th>UID</th>
+    <th>IP address</th> 
+  </tr>
+
+</table>
+
+
+</html>
